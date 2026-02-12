@@ -1,4 +1,4 @@
-const { useEffect, useMemo } = React;
+const { useEffect, useMemo, useState } = React;
 
 function startHeartsCanvas() {
   const canvas = document.getElementById("hearts-canvas");
@@ -101,44 +101,161 @@ function startHeartsCanvas() {
 }
 
 function App() {
-  const headerLeftImage = "src/Photo-ronde-droite.jpg";
-  const headerRightImage = "src/Photo-ronde-gauche.jpg";
+  const headerLeftImage = "src/Photo-ronde-gauche.jpg";
+  const headerRightImage = "src/Photo-ronde-droite.jpg";
 
   const title = "À notre Saint Valentin";
   const subtitle =
-    "Un petit endroit rien qu’à nous, pour revivre notre histoire 🥰";
+    "Un petit endroit rien qu’à nous, pour revivre notre histoire, notre relation 🥰";
 
-  const badges = useMemo(
-    () => ["Nos souvenirs ✨", "Nos photos 📸", "Toi & moi ❤️"],
-    []
-  );
+const startDate = useMemo(() => new Date("2023-06-02T00:00:00"), []);
+
+function formatElapsed(from, to) {
+  let start = new Date(from);
+  let now = new Date(to);
+
+  let years = now.getFullYear() - start.getFullYear();
+  let months = now.getMonth() - start.getMonth();
+  let days = now.getDate() - start.getDate();
+
+  // Ajustement si jours négatifs
+  if (days < 0) {
+    months--;
+
+    const daysInPrevMonth = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      0
+    ).getDate();
+
+    days += daysInPrevMonth;
+  }
+
+  // Ajustement si mois négatifs
+  if (months < 0) {
+    years--;
+    months += 12;
+  }
+
+  return `${years} an${years > 1 ? "s" : ""} `
+       + `${months} mois `
+       + `${days} jour${days > 1 ? "s" : ""}`;
+}
+
+const [elapsed, setElapsed] = useState(() =>
+  formatElapsed(startDate, new Date())
+);
+
+useEffect(() => {
+  const id = setInterval(() => {
+    setElapsed(formatElapsed(startDate, new Date()));
+  }, 60000); // update chaque minute suffit
+
+  return () => clearInterval(id);
+}, [startDate]);
+
+const badges = useMemo(
+  () => ["Nos souvenirs ✨", "Nos photos 📸", "Toi & moi ❤️"],
+  []
+);
+
 
   const chapters = useMemo(
     () => [
       {
-        title: "Le début de notre amour",
+        title: "Le début de notre amour 💝",
         text:
-          "Le jour où tout a commencé. J’aime repenser à ce moment et me dire qu'on a eu tellement de chance de se rencontrer 😍",
+          "Le jour où tout a commencé. J’aime tellement repenser à ce moment et me dire qu'on a eu tellement de chance de se rencontrer 😍",
         images: ["src/photo 1.jpg"],
       },
       {
-        title: "Chapitre 2 — Nos premiers souvenirs",
+        title: "Passion amoureuse 💖",
         text:
-          "Nos premières habitudes, nos rires, nos petits trucs à nous… et cette évidence : j’étais bien, avec toi.",
-        images: ["src/photo 2.jpg", "src/photo 3.jpg", "src/photo 4.jpg", "src/c2-4.jpg"],
+          "Ainsi débuta nos premiers moments romantiques, remplis de partages et d'amour plus merveilleux les uns que les autres 🎀",
+        images: ["src/photo 2.jpg", "src/photo 3.jpg", "src/photo 4.jpg", "src/photo 5.jpg"],
       },
       {
-        title: "Chapitre 3 — Aujourd’hui",
+        title: "Nos premières vacances ensemble 🚗⛰️",
         text:
-          "Je te choisis, chaque jour. Pour ce que tu es, pour ce que tu m’apportes, et pour tout ce qu’on construit.",
-        images: ["src/c3-1.jpg", "src/c3-2.jpg"],
+          "Je me souviendrais toujours de ces premières vacances tous les deux, où tu m'as invité à venir avec toi et ta famille en Auvergne alors que notre relation ne faisait qu'encore quelques mois 🤩",
+        images: ["src/Photo 6.jpg", "src/photo 7.jpg"],
+      },
+      {
+        title: "Début d'une nouvelle année ⌛",
+        text:
+          "Quelques souvenirs encore en notre fin d'année 2023 mais aussi du début de 2024, quand je regarde nos photos je me dis que l'on est fait pour être ensemble et de vivre notre amour 😉",
+        images: ["src/Photo 8.jpg", "src/Photo 9.jpg", "src/Photo 10.jpg", "src/Photo 11.jpg"],
+      },
+      {
+        title: "Un moment symbolique 💐",
+        text:
+          "Un grand moment de notre couple, nous passions notre première Saint-Valentin en étant ensemble et c'est là que je t'ai offert ton premier bouquet de fleurs, moment inoubliable 😊😘",
+        images: ["src/Saint Valentin 2024.jpg"],
+      },
+      {
+        title: "Deuxième voyage à deux 🌊🍦",
+        text:
+          "Cette fois ci ce n'est pas moi qui suit venu en Auvergne mais toi qui est venue en Bretagne avec moi et mes parents, que de beaux moments nostalgiques 🥹",
+        images: ["src/Photo 14.jpg","src/Photo 12.jpg", "src/Photo 13.jpg"],
+      },
+      {
+        title: "Nos 1 ans ✨",
+        text:
+          "Le temps avait passé si vite, nous fêtions déjà nos 1 ans de couple en montant à bord de la célèbre montgolfière de Disney 🏰🐭",
+        images: ["src/Photo 15.jpg","src/Photo 16.jpg", "src/Nos 1 an.jpg", "src/Nos 1 an (2).jpg"],
+      },
+      {
+        title: "Été 2024🌞",
+        text:
+          "Cet été à été riche en expérience, ton anniversaire où tu as fêté tes 18 ans et auquel je t'ai offert les places pour le parc DisneyLand 🥳🎁, je pense que l'on est d'accord pour dire que ces jours resteront à jamais dans nos mémoires ♾️",
+        images: ["src/Photo 17.jpg","src/Photo 18.jpg", "src/Photo 19.jpg", "src/Photo 20.jpg", "src/Photo 21.jpg"],
+      },
+      {
+        title: "Décembre 2024 ❄️",
+        text:
+          "Tu continuais de partager ton amour avec moi, t'as présence le jour de mes 18 ans, l'un des moments les plus importants de ma vie, tu étais là ! Puis est venu le moment de notre location AirBNB où nous avons vécu notre vie d'adulte, rien que tous les deux dans notre intimité😜🎉⛪🎡",
+        images: ["src/Photo 22.jpg","src/Photo 23.jpg", "src/Photo 24.jpg", "src/Photo 25.jpg"],
+      },
+      {
+        title: "Été 2025🌞 + stage",
+        text:
+          "Ce moment très important où nous nous sommes retrouvés à nouveau, où tu m'as apporté ton soutien et ton moral lors de mon stage qui nous a ouvert à d'autres moments de partage. C'est aussi à cette période que nous avons fêter tes 19 ans encore une fois ensemble 🤝",
+        images: ["src/Photo 26.jpg","src/Photo 27.jpg", "src/Photo 28.jpg", "src/Photo 29.jpg", "src/Photo 30.jpg", "src/photo1.jpg"],
+      },
+      {
+        title: "Été 2025🌞 + stage 2",
+        text:
+          "Tu es également venu me soutenir pour mon deuxième stage. Alors que je vivais seul, ta présence me réconfortait et j'étais heureux d'avoir la femme que j'aime à mes côtés, habitant avec moi pendants ces vacances d'été 🫶🏻💘",
+        images: ["src/Photo 31.jpg","src/Photo 32.jpg", "src/photo3.jpg", "src/Photo 33.jpg", "src/Photo 34.jpg"],
+      },
+      {
+        title: "Fin d'année 2025 ⚜️",
+        text:
+          "Cette année aura été remplit d'innombrables souvenirs, en partageant ma fête d'anniversaire de mes 19 ans pour laquelle tu es resté à la maison plusieurs jours, menant à la sortie au Musée Grévin qui nous a émerveillé 📷",
+        images: ["src/Photo 35.jpg","src/Photo 36.jpg", "src/Photo 37.jpg"],
+      },
+      {
+        title: "Aujourd'hui",
+        text:
+          "Tout ce parcours nous a amené jusqu'ici, en février 2026 où nous allons vivre notre nouvelle Saint-Valentin ensemble, ainsi que notre week-end dans l'hôtel de Noisy-le-Grand qui sera déjà sans aucun doute un véritable bonheur 🥹💝",
+        images: ["src/Photo 39.jpg","src/Photo 40.jpg"],
       },
     ],
     []
   );
 
-  const finalMessage =
-    "Je te souhaite une bonne Saint Valentin ma chérie, merci d’exister et de faire partie de ma vie. Je t’aime ❤️";
+  const finalMessage = `
+Je ne te remercierai jamais assez de faire partie de ma vie.
+Tu as fait de moi un homme.
+Je souhaite passer cette Saint-Valentin à tes côtés.
+Mais je te pose tout de même la question
+
+Aurélie, veux-tu être ma valentine ❤️🙏 ?
+
+Sache que je t’aime plus que tout ❤️
+Je t'aime 💖
+`;
+
 
   useEffect(() => {
     const cleanup = startHeartsCanvas();
@@ -154,9 +271,15 @@ function App() {
           </div>
 
           <div className="hero-center">
-            <h1>
-              {title} <span className="heart">❤️</span>
+            <h1 className="hero-title">
+              <span className="title-text">
+                {title} <span className="heart">❤️</span>
+              </span>
+
+              <span className="timer">{elapsed}</span>
             </h1>
+
+
             <p>{subtitle}</p>
 
             <div className="badges">
@@ -194,12 +317,7 @@ function App() {
             );
           })}
         </div>
-
-        <div className="footer-love">
-          <strong>Un dernier mot</strong>
-          <div style={{ height: 8 }} />
-          {finalMessage}
-        </div>
+        <p className="final-message">{finalMessage}</p>
       </div>
     </div>
   );
