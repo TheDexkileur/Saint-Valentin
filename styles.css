@@ -1,0 +1,143 @@
+body{
+  background:
+    radial-gradient(circle at 20% 20%, #b11226 0%, transparent 40%),
+    radial-gradient(circle at 80% 30%, #800020 0%, transparent 40%),
+    linear-gradient(160deg, #1a0000, #4a0010, #2b0000);
+
+  background-attachment: fixed;
+}
+
+
+.hero{
+  position: relative;
+  display: grid;
+  gap: 14px;
+  padding: 26px 22px 22px;
+  border-radius: 22px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(255,255,255,0.06));
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(10px);
+}
+
+.hero-top{
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 16px;
+}
+
+.avatar{
+  width: 120px;
+  height: 120px;
+  border-radius: 999px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.22);
+  background: rgba(0,0,0,0.20);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.25);
+}
+
+.avatar img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.hero-top .avatar:first-child img {
+  object-position: 50% 30%;
+}
+
+.hero-center{
+    text-align: center;
+    color: rgb(212, 210, 210)
+}
+
+.hero-center h1{
+  margin: 0;
+  font-size: clamp(26px, 3vw, 40px);
+}
+
+.hero-center p{
+  margin: 8px 0 0;
+  color: var(--muted);
+  line-height: 1.6;
+  font-size: 16px;
+}
+
+/* ----- Chapitres ----- */
+.chapter{
+  margin-top: 14px;
+  padding: 18px;
+  border-radius: 22px;
+  border: 1px solid var(--border);
+  background: linear-gradient(180deg, rgb(149, 7, 7), rgba(255,255,255,0.05));
+  box-shadow: 0 16px 45px rgba(0,0,0,0.25);
+  backdrop-filter: blur(10px);
+}
+
+.chapter h3{
+  margin: 0 0 8px;
+  font-size: 26px;
+  color: rgb(212, 210, 210)
+}
+
+.chapter p{
+  margin: 0 0 14px;
+  line-height: 1.7;
+  color:rgb(255, 0, 200)
+}
+
+
+.photos-grid.two{
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.photos-grid.four{
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.chapter-photo{
+  border-radius: 18px;
+  overflow: hidden;
+  aspect-ratio: 3 / 3;
+}
+
+.chapter-photo img{
+  width: 100%;
+  height: 100%;
+  border-radius: 18px;
+  object-fit: contain;
+  display: block;
+}
+
+/* Responsive */
+@media (max-width: 760px){
+  .hero-top{
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+  }
+
+  .avatar{
+    width: 84px;
+    height: 84px;
+  }
+
+  .photos-grid.two,
+  .photos-grid.four{
+    grid-template-columns: 1fr;
+  }
+
+  .chapter-photo{
+    aspect-ratio: 16 / 10;
+  }
+}
+#hearts-canvas{
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10;
+  pointer-events: none;
+}
